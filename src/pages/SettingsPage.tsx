@@ -2,8 +2,9 @@
 import React from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
-import { Sun, Moon, LogOut } from "lucide-react";
+import { Sun, Moon, LogOut, Globe } from "lucide-react";
 import Header from "@/components/Header";
 import BottomNavigation from "@/components/BottomNavigation";
 import ThemeSelector from "@/components/ThemeSelector";
@@ -11,10 +12,18 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const SettingsPage: React.FC = () => {
   const { user, signOut } = useAuth();
   const { theme, toggleTheme } = useTheme();
+  const { language, setLanguage, t } = useLanguage();
 
   if (!user) {
     return null;
@@ -22,7 +31,7 @@ const SettingsPage: React.FC = () => {
 
   return (
     <div className="pb-16">
-      <Header title="Settings" />
+      <Header title={t("settings.title")} />
       
       <div className="p-4 space-y-6">
         <div className="flex items-center space-x-4">
@@ -39,14 +48,14 @@ const SettingsPage: React.FC = () => {
         <Separator />
         
         <div className="space-y-6">
-          <h3 className="text-lg font-medium">Appearance</h3>
+          <h3 className="text-lg font-medium">{t("settings.appearance")}</h3>
           
           <div className="grid gap-4">
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
-                <Label htmlFor="theme-toggle">Dark Mode</Label>
+                <Label htmlFor="theme-toggle">{t("settings.dark_mode")}</Label>
                 <p className="text-sm text-muted-foreground">
-                  Switch between light and dark themes
+                  {t("settings.dark_mode.desc")}
                 </p>
               </div>
               <div className="flex items-center space-x-2">
@@ -62,12 +71,43 @@ const SettingsPage: React.FC = () => {
             
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
-                <Label>Color Theme</Label>
+                <Label>{t("settings.color_theme")}</Label>
                 <p className="text-sm text-muted-foreground">
-                  Choose your preferred color theme
+                  {t("settings.color_theme.desc")}
                 </p>
               </div>
               <ThemeSelector />
+            </div>
+            
+            <div className="flex items-center justify-between">
+              <div className="space-y-0.5">
+                <Label>{t("settings.language")}</Label>
+                <p className="text-sm text-muted-foreground">
+                  {t("settings.language.desc")}
+                </p>
+              </div>
+              <Select
+                value={language}
+                onValueChange={(value) => setLanguage(value as "en-US" | "pt-BR")}
+              >
+                <SelectTrigger className="w-[140px]">
+                  <SelectValue placeholder="Select language" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="en-US">
+                    <div className="flex items-center">
+                      <Globe className="h-4 w-4 mr-2" />
+                      English
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="pt-BR">
+                    <div className="flex items-center">
+                      <Globe className="h-4 w-4 mr-2" />
+                      Português
+                    </div>
+                  </SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
         </div>
@@ -75,14 +115,14 @@ const SettingsPage: React.FC = () => {
         <Separator />
         
         <div className="space-y-6">
-          <h3 className="text-lg font-medium">Notifications</h3>
+          <h3 className="text-lg font-medium">{t("settings.notifications")}</h3>
           
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
-                <Label htmlFor="prayer-notifications">Prayer Reminders</Label>
+                <Label htmlFor="prayer-notifications">{t("settings.prayer_reminders")}</Label>
                 <p className="text-sm text-muted-foreground">
-                  Receive notifications for prayer reminders
+                  {t("settings.prayer_reminders.desc")}
                 </p>
               </div>
               <Switch id="prayer-notifications" defaultChecked />
@@ -90,9 +130,9 @@ const SettingsPage: React.FC = () => {
             
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
-                <Label htmlFor="group-notifications">Group Updates</Label>
+                <Label htmlFor="group-notifications">{t("settings.group_updates")}</Label>
                 <p className="text-sm text-muted-foreground">
-                  Receive notifications for new group prayer requests
+                  {t("settings.group_updates.desc")}
                 </p>
               </div>
               <Switch id="group-notifications" defaultChecked />
@@ -108,7 +148,7 @@ const SettingsPage: React.FC = () => {
           onClick={signOut}
         >
           <LogOut className="h-4 w-4 mr-2" />
-          Sign Out
+          {t("settings.sign_out")}
         </Button>
       </div>
       

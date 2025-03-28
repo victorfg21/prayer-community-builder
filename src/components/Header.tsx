@@ -3,6 +3,7 @@ import React from "react";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface HeaderProps {
   title: string;
@@ -16,7 +17,8 @@ const Header: React.FC<HeaderProps> = ({
   rightElement,
 }) => {
   const navigate = useNavigate();
-
+  const { t } = useLanguage();
+  
   return (
     <div className="sticky top-0 z-10 flex items-center justify-between h-14 px-4 border-b border-border bg-background">
       <div className="flex items-center">
