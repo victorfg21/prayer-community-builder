@@ -9,6 +9,7 @@ import { ThemeProvider } from "@/contexts/ThemeContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { useAuth } from "@/contexts/AuthContext";
 import Login from "./pages/Login";
+import Callback from "./pages/Callback";
 import HomePage from "./pages/HomePage";
 import GroupsPage from "./pages/GroupsPage";
 import GroupDetailPage from "./pages/GroupDetailPage";
@@ -44,7 +45,9 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 const AppRoutes = () => (
   <Routes>
     <Route path="/login" element={<Login />} />
-    
+
+    <Route path="/callback" element={<Callback />} />
+  
     <Route path="/" element={
       <ProtectedRoute>
         <HomePage />

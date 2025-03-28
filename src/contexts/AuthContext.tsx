@@ -1,6 +1,7 @@
 
 import React, { createContext, useState, useContext, useEffect } from "react";
 import { toast } from "@/components/ui/sonner";
+import axios from "axios";
 
 // Mock user data interface
 export interface User {
@@ -14,7 +15,8 @@ interface AuthContextType {
   user: User | null;
   loading: boolean;
   signInWithGoogle: () => void;
-  signOut: () => void;
+  signOut: () => void;  
+  signInWithGoogleCallback: (token: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -29,34 +31,38 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (savedUser) {
       setUser(JSON.parse(savedUser));
     }
-    
-    // Simulate auth initialization delay
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-    
-    return () => clearTimeout(timer);
+
+    setLoading(false);
   }, []);
 
   const signInWithGoogle = () => {
-    // Mock Google sign-in
-    setLoading(true);
-    
-    // Simulate auth delay
-    setTimeout(() => {
-      const mockUser: User = {
-        id: "google-user-123",
-        name: "John Doe",
-        email: "john.doe@example.com",
-        photoURL: "https://randomuser.me/api/portraits/men/32.jpg"
-      };
-      
-      setUser(mockUser);
-      localStorage.setItem("oremus-user", JSON.stringify(mockUser));
-      setLoading(false);
-      toast("You are now signed in!");
-    }, 1500);
+    const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+    const redirectUri = import.meta.env.VITE_GOOGLE_REDIRECT_URI;
+    const scope = "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email";
+    const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${scope}&access_type=offline`;
+
+    window.location.href = authUrl;
   };
+
+  const signInWithGoogleCallback = async (token: string) => {
+    setLoading(true);
+
+    const userInfo = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    const user: User = {
+      id: userInfo.data.sub,
+      name: userInfo.data.name,
+      email: userInfo.data.email,
+      photoURL: userInfo.data.picture
+    };
+
+    setUser(user);
+    localStorage.setItem("oremus-user", JSON.stringify(user));
+    setLoading(false);
+  };
+
 
   const signOut = () => {
     setUser(null);
@@ -65,7 +71,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, signInWithGoogle, signOut }}>
+    <AuthContext.Provider value={{ user, loading, signInWithGoogle, signOut, signInWithGoogleCallback }}>
       {children}
     </AuthContext.Provider>
   );
