@@ -3,9 +3,11 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Home, Users, PlusCircle, Settings } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const BottomNavigation: React.FC = () => {
   const location = useLocation();
+  const { t } = useLanguage();
 
   const isActive = (path: string) => {
     return location.pathname === path;
@@ -21,7 +23,7 @@ const BottomNavigation: React.FC = () => {
         )}
       >
         <Home size={22} />
-        <span className="text-xs mt-1">Home</span>
+        <span className="text-xs mt-1">{t("nav.home")}</span>
       </Link>
       
       <Link 
@@ -32,7 +34,7 @@ const BottomNavigation: React.FC = () => {
         )}
       >
         <Users size={22} />
-        <span className="text-xs mt-1">Groups</span>
+        <span className="text-xs mt-1">{t("nav.groups")}</span>
       </Link>
       
       <Link 
@@ -43,7 +45,7 @@ const BottomNavigation: React.FC = () => {
         )}
       >
         <PlusCircle size={22} />
-        <span className="text-xs mt-1">Create</span>
+        <span className="text-xs mt-1">{t("create_group.create")}</span>
       </Link>
       
       <Link 
@@ -54,7 +56,7 @@ const BottomNavigation: React.FC = () => {
         )}
       >
         <Settings size={22} />
-        <span className="text-xs mt-1">Settings</span>
+        <span className="text-xs mt-1">{t("nav.settings")}</span>
       </Link>
     </div>
   );

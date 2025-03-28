@@ -14,12 +14,20 @@ const translations = {
   "en-US": {
     // General
     "app.name": "Oremus",
+    "app.tagline": "Unite in prayer, grow in faith",
     
     // Navigation
     "nav.home": "Home",
     "nav.groups": "Groups",
     "nav.settings": "Settings",
     "nav.back": "Back",
+    
+    // Login
+    "login.welcome": "Welcome to Oremus",
+    "login.description": "Join our prayer community to share, support, and grow together in faith.",
+    "login.sign_in": "Sign in with Google",
+    "login.signing_in": "Signing in...",
+    "login.terms": "By continuing, you agree to our Terms of Service and Privacy Policy.",
     
     // Home Page
     "home.title": "Prayer Dashboard",
@@ -53,6 +61,9 @@ const translations = {
     "create_group.image_hint": "Enter a URL to an image that represents your group",
     "create_group.button": "Create Prayer Group",
     "create_group.creating": "Creating...",
+    "create_group.success": "Prayer group created successfully!",
+    "create_group.error": "Failed to create group",
+    "create_group.required": "is required",
     
     // Create Prayer Page
     "create_prayer.title": "Create Prayer Request",
@@ -97,16 +108,28 @@ const translations = {
     "prayer.description": "Description",
     "prayer.group": "Group",
     "prayer.created": "Prayer request created",
+    
+    // Errors
+    "errors.page_not_found": "Oops! Page not found",
+    "errors.return_home": "Return to Home",
   },
   "pt-BR": {
     // General
     "app.name": "Oremus",
+    "app.tagline": "Unidos em oração, crescendo na fé",
     
     // Navigation
     "nav.home": "Início",
     "nav.groups": "Grupos",
     "nav.settings": "Configurações",
     "nav.back": "Voltar",
+    
+    // Login
+    "login.welcome": "Bem-vindo ao Oremus",
+    "login.description": "Junte-se à nossa comunidade de oração para compartilhar, apoiar e crescer juntos na fé.",
+    "login.sign_in": "Entrar com Google",
+    "login.signing_in": "Entrando...",
+    "login.terms": "Ao continuar, você concorda com nossos Termos de Serviço e Política de Privacidade.",
     
     // Home Page
     "home.title": "Painel de Oração",
@@ -140,6 +163,9 @@ const translations = {
     "create_group.image_hint": "Digite uma URL para uma imagem que represente seu grupo",
     "create_group.button": "Criar Grupo de Oração",
     "create_group.creating": "Criando...",
+    "create_group.success": "Grupo de oração criado com sucesso!",
+    "create_group.error": "Falha ao criar grupo",
+    "create_group.required": "é obrigatório",
     
     // Create Prayer Page
     "create_prayer.title": "Criar Pedido de Oração",
@@ -184,6 +210,10 @@ const translations = {
     "prayer.description": "Descrição",
     "prayer.group": "Grupo",
     "prayer.created": "Pedido de oração criado",
+    
+    // Errors
+    "errors.page_not_found": "Ops! Página não encontrada",
+    "errors.return_home": "Voltar para o Início",
   }
 };
 

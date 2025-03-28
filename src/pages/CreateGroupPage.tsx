@@ -10,10 +10,12 @@ import { Label } from "@/components/ui/label";
 import Header from "@/components/Header";
 import BottomNavigation from "@/components/BottomNavigation";
 import { toast } from "@/components/ui/sonner";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const CreateGroupPage: React.FC = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { t } = useLanguage();
   
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -26,7 +28,7 @@ const CreateGroupPage: React.FC = () => {
     if (!user) return;
     
     if (!name.trim()) {
-      toast("Please enter a group name");
+      toast(t("create_group.name") + " " + t("create_group.required"));
       return;
     }
     
@@ -40,10 +42,10 @@ const CreateGroupPage: React.FC = () => {
         imageUrl: imageUrl || undefined
       });
       
-      toast("Prayer group created successfully!");
+      toast(t("create_group.success"));
       navigate(`/group/${newGroup.id}`);
     } catch (error) {
-      toast("Failed to create group");
+      toast(t("create_group.error"));
       console.error("Error creating group:", error);
     } finally {
       setIsSubmitting(false);
@@ -56,42 +58,42 @@ const CreateGroupPage: React.FC = () => {
 
   return (
     <div className="pb-16">
-      <Header title="Create Prayer Group" showBackButton />
+      <Header title="create_group.title" showBackButton />
       
       <div className="p-4">
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-2">
-            <Label htmlFor="name">Group Name*</Label>
+            <Label htmlFor="name">{t("create_group.name")}</Label>
             <Input
               id="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Enter group name"
+              placeholder={t("create_group.name_placeholder")}
               required
             />
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="description">Description</Label>
+            <Label htmlFor="description">{t("create_group.description")}</Label>
             <Textarea
               id="description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="Describe the purpose of your prayer group"
+              placeholder={t("create_group.description_placeholder")}
               rows={4}
             />
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="imageUrl">Image URL (optional)</Label>
+            <Label htmlFor="imageUrl">{t("create_group.image_url")}</Label>
             <Input
               id="imageUrl"
               value={imageUrl}
               onChange={(e) => setImageUrl(e.target.value)}
-              placeholder="Enter an image URL for your group"
+              placeholder={t("create_group.image_url_placeholder")}
             />
             <p className="text-xs text-muted-foreground">
-              Enter a URL to an image that represents your group
+              {t("create_group.image_hint")}
             </p>
           </div>
           
@@ -100,7 +102,7 @@ const CreateGroupPage: React.FC = () => {
             className="w-full" 
             disabled={isSubmitting || !name.trim()}
           >
-            {isSubmitting ? "Creating..." : "Create Prayer Group"}
+            {isSubmitting ? t("create_group.creating") : t("create_group.button")}
           </Button>
         </form>
       </div>

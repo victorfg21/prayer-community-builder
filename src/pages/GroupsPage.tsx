@@ -8,9 +8,11 @@ import Header from "@/components/Header";
 import BottomNavigation from "@/components/BottomNavigation";
 import GroupCard from "@/components/GroupCard";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const GroupsPage: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const [groups, setGroups] = useState<PrayerGroup[]>([]);
   const [filteredGroups, setFilteredGroups] = useState<PrayerGroup[]>([]);
   const [loading, setLoading] = useState(true);
@@ -48,7 +50,7 @@ const GroupsPage: React.FC = () => {
   return (
     <div className="pb-16">
       <Header
-        title="Prayer Groups"
+        title="groups.title"
         rightElement={
           <Button
             size="icon"
@@ -67,7 +69,7 @@ const GroupsPage: React.FC = () => {
             className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground"
           />
           <Input
-            placeholder="Search groups..."
+            placeholder={t("groups.search")}
             className="pl-10"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -84,12 +86,12 @@ const GroupsPage: React.FC = () => {
           </div>
         ) : filteredGroups.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-muted-foreground mb-2">No groups found</p>
+            <p className="text-muted-foreground mb-2">{t("groups.no_groups")}</p>
             <Button 
               variant="link" 
               onClick={() => navigate("/create")}
             >
-              Create a new group
+              {t("groups.create_new")}
             </Button>
           </div>
         ) : (
