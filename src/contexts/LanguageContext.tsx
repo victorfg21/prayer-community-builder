@@ -19,17 +19,61 @@ const translations = {
     "nav.home": "Home",
     "nav.groups": "Groups",
     "nav.settings": "Settings",
+    "nav.back": "Back",
     
     // Home Page
     "home.title": "Prayer Dashboard",
     "home.latest": "Latest Prayers",
     "home.view_all": "View All",
+    "home.welcome": "Welcome",
+    "home.join_create": "Join or create a prayer group to share and support others in prayer.",
+    "home.browse_groups": "Browse Groups",
+    "home.create_group": "Create Group",
+    "home.your_prayer_groups": "Your Prayer Groups",
+    "home.no_groups": "You haven't joined any prayer groups yet.",
+    "home.browse_available": "Browse available groups",
     
     // Groups Page
     "groups.title": "Prayer Groups",
     "groups.create": "Create Group",
     "groups.join": "Join Group",
     "groups.empty": "You're not part of any groups yet",
+    "groups.search": "Search groups...",
+    "groups.no_groups": "No groups found",
+    "groups.create_new": "Create a new group",
+    
+    // Create Group Page
+    "create_group.title": "Create Prayer Group",
+    "create_group.name": "Group Name*",
+    "create_group.name_placeholder": "Enter group name",
+    "create_group.description": "Description",
+    "create_group.description_placeholder": "Describe the purpose of your prayer group",
+    "create_group.image_url": "Image URL (optional)",
+    "create_group.image_url_placeholder": "Enter an image URL for your group",
+    "create_group.image_hint": "Enter a URL to an image that represents your group",
+    "create_group.button": "Create Prayer Group",
+    "create_group.creating": "Creating...",
+    
+    // Create Prayer Page
+    "create_prayer.title": "Create Prayer Request",
+    "create_prayer.for_group": "Creating a prayer request for",
+    "create_prayer.prayer_title": "Prayer Title*",
+    "create_prayer.title_placeholder": "Enter prayer title",
+    "create_prayer.description": "Description",
+    "create_prayer.description_placeholder": "Describe your prayer request",
+    "create_prayer.type": "Prayer Type",
+    "create_prayer.type_prayer": "Prayer Request",
+    "create_prayer.type_prayer_desc": "A regular prayer request for support",
+    "create_prayer.type_fast": "Fasting Prayer",
+    "create_prayer.type_fast_desc": "A prayer accompanied by fasting",
+    "create_prayer.type_night": "Night Prayer",
+    "create_prayer.type_night_desc": "Prayer during night hours",
+    "create_prayer.reminder": "Reminder Time (optional)",
+    "create_prayer.reminder_desc": "Set a daily reminder time for this prayer",
+    "create_prayer.end_date": "End Date (optional)",
+    "create_prayer.end_date_desc": "Set an end date for the fasting period",
+    "create_prayer.button": "Create Prayer Request",
+    "create_prayer.creating": "Creating...",
     
     // Settings Page
     "settings.title": "Settings",
@@ -62,17 +106,61 @@ const translations = {
     "nav.home": "Início",
     "nav.groups": "Grupos",
     "nav.settings": "Configurações",
+    "nav.back": "Voltar",
     
     // Home Page
     "home.title": "Painel de Oração",
     "home.latest": "Orações Recentes",
     "home.view_all": "Ver Todos",
+    "home.welcome": "Bem-vindo",
+    "home.join_create": "Participe ou crie um grupo de oração para compartilhar e apoiar outros em oração.",
+    "home.browse_groups": "Explorar Grupos",
+    "home.create_group": "Criar Grupo",
+    "home.your_prayer_groups": "Seus Grupos de Oração",
+    "home.no_groups": "Você ainda não participa de nenhum grupo de oração.",
+    "home.browse_available": "Explorar grupos disponíveis",
     
     // Groups Page
     "groups.title": "Grupos de Oração",
     "groups.create": "Criar Grupo",
     "groups.join": "Entrar em Grupo",
     "groups.empty": "Você ainda não participa de nenhum grupo",
+    "groups.search": "Buscar grupos...",
+    "groups.no_groups": "Nenhum grupo encontrado",
+    "groups.create_new": "Criar um novo grupo",
+    
+    // Create Group Page
+    "create_group.title": "Criar Grupo de Oração",
+    "create_group.name": "Nome do Grupo*",
+    "create_group.name_placeholder": "Digite o nome do grupo",
+    "create_group.description": "Descrição",
+    "create_group.description_placeholder": "Descreva o propósito do seu grupo de oração",
+    "create_group.image_url": "URL da Imagem (opcional)",
+    "create_group.image_url_placeholder": "Digite uma URL de imagem para seu grupo",
+    "create_group.image_hint": "Digite uma URL para uma imagem que represente seu grupo",
+    "create_group.button": "Criar Grupo de Oração",
+    "create_group.creating": "Criando...",
+    
+    // Create Prayer Page
+    "create_prayer.title": "Criar Pedido de Oração",
+    "create_prayer.for_group": "Criando um pedido de oração para",
+    "create_prayer.prayer_title": "Título da Oração*",
+    "create_prayer.title_placeholder": "Digite o título da oração",
+    "create_prayer.description": "Descrição",
+    "create_prayer.description_placeholder": "Descreva seu pedido de oração",
+    "create_prayer.type": "Tipo de Oração",
+    "create_prayer.type_prayer": "Pedido de Oração",
+    "create_prayer.type_prayer_desc": "Um pedido regular de oração para apoio",
+    "create_prayer.type_fast": "Oração com Jejum",
+    "create_prayer.type_fast_desc": "Uma oração acompanhada de jejum",
+    "create_prayer.type_night": "Oração Noturna",
+    "create_prayer.type_night_desc": "Oração durante as horas noturnas",
+    "create_prayer.reminder": "Horário de Lembrete (opcional)",
+    "create_prayer.reminder_desc": "Defina um horário diário de lembrete para esta oração",
+    "create_prayer.end_date": "Data de Término (opcional)",
+    "create_prayer.end_date_desc": "Defina uma data de término para o período de jejum",
+    "create_prayer.button": "Criar Pedido de Oração",
+    "create_prayer.creating": "Criando...",
     
     // Settings Page
     "settings.title": "Configurações",
@@ -105,7 +193,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [language, setLanguageState] = useState<LanguageType>(() => {
     if (typeof window !== "undefined") {
       const savedLanguage = localStorage.getItem("oremus-language") as LanguageType;
-      if (savedLanguage) return savedLanguage;
+      if (savedLanguage && (savedLanguage === "en-US" || savedLanguage === "pt-BR")) return savedLanguage;
       
       // Use browser language if available and supported
       const browserLang = navigator.language;
@@ -117,10 +205,11 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const setLanguage = (newLanguage: LanguageType) => {
     setLanguageState(newLanguage);
     localStorage.setItem("oremus-language", newLanguage);
-    toast(`${newLanguage === "en-US" ? "Language changed to English" : "Idioma alterado para Português"}`);
+    toast(newLanguage === "en-US" ? "Language changed to English" : "Idioma alterado para Português");
   };
 
   const t = (key: string): string => {
+    if (!key) return '';
     return translations[language][key] || key;
   };
 
