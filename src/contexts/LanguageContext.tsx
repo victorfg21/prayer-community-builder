@@ -1,4 +1,3 @@
-
 import React, { createContext, useState, useContext, useEffect } from "react";
 import { toast } from "@/components/ui/sonner";
 
@@ -112,6 +111,32 @@ const translations = {
     // Errors
     "errors.page_not_found": "Oops! Page not found",
     "errors.return_home": "Return to Home",
+
+    // Create Prayer Page - Additional translations
+    "create_prayer.title_required": "Please enter a prayer title",
+    "create_prayer.success": "Prayer request created successfully!",
+    "create_prayer.error": "Failed to create prayer request",
+    
+    // Group Detail Page
+    "group_detail.prayer_requests": "Prayer Requests",
+    "group_detail.new_prayer": "New Prayer",
+    "group_detail.tab_all": "All",
+    "group_detail.tab_prayers": "Prayers",
+    "group_detail.tab_fasts": "Fasts",
+    "group_detail.tab_night": "Night",
+    "group_detail.no_prayers": "No prayer requests found",
+    "group_detail.no_prayers_create": "Create the first prayer request",
+    "group_detail.no_prayers_regular": "No prayer requests found",
+    "group_detail.no_prayers_create_regular": "Create a prayer request",
+    "group_detail.no_fasts": "No fasting prayers found",
+    "group_detail.no_fasts_create": "Create a fasting prayer",
+    "group_detail.no_night": "No night prayer requests found",
+    "group_detail.no_night_create": "Create a night prayer",
+    "group_detail.members": "member",
+    "group_detail.members_plural": "members",
+    "group_detail.group_not_found": "Group not found",
+    "group_detail.back_to_groups": "Back to groups",
+    "group_detail.loading": "Loading...",
   },
   "pt-BR": {
     // General
@@ -214,6 +239,32 @@ const translations = {
     // Errors
     "errors.page_not_found": "Ops! Página não encontrada",
     "errors.return_home": "Voltar para o Início",
+
+    // Create Prayer Page - Additional translations
+    "create_prayer.title_required": "Por favor insira um título para a oração",
+    "create_prayer.success": "Pedido de oração criado com sucesso!",
+    "create_prayer.error": "Falha ao criar pedido de oração",
+    
+    // Group Detail Page
+    "group_detail.prayer_requests": "Pedidos de Oração",
+    "group_detail.new_prayer": "Nova Oração",
+    "group_detail.tab_all": "Todos",
+    "group_detail.tab_prayers": "Orações",
+    "group_detail.tab_fasts": "Jejuns",
+    "group_detail.tab_night": "Noturna",
+    "group_detail.no_prayers": "Nenhum pedido de oração encontrado",
+    "group_detail.no_prayers_create": "Criar o primeiro pedido de oração",
+    "group_detail.no_prayers_regular": "Nenhum pedido de oração encontrado",
+    "group_detail.no_prayers_create_regular": "Criar um pedido de oração",
+    "group_detail.no_fasts": "Nenhuma oração com jejum encontrada",
+    "group_detail.no_fasts_create": "Criar uma oração com jejum",
+    "group_detail.no_night": "Nenhuma oração noturna encontrada",
+    "group_detail.no_night_create": "Criar uma oração noturna",
+    "group_detail.members": "membro",
+    "group_detail.members_plural": "membros",
+    "group_detail.group_not_found": "Grupo não encontrado",
+    "group_detail.back_to_groups": "Voltar para grupos",
+    "group_detail.loading": "Carregando...",
   }
 };
 

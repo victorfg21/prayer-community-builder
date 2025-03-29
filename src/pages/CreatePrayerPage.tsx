@@ -12,11 +12,13 @@ import Header from "@/components/Header";
 import BottomNavigation from "@/components/BottomNavigation";
 import { toast } from "@/components/ui/sonner";
 import { Heart, CalendarDays, Moon } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const CreatePrayerPage: React.FC = () => {
   const { groupId } = useParams<{ groupId: string }>();
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { t } = useLanguage();
   
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -49,7 +51,7 @@ const CreatePrayerPage: React.FC = () => {
     if (!user || !groupId) return;
     
     if (!title.trim()) {
-      toast("Please enter a prayer title");
+      toast(t("create_prayer.title_required"));
       return;
     }
     
@@ -66,10 +68,10 @@ const CreatePrayerPage: React.FC = () => {
         endDate: endDate ? new Date(endDate) : undefined
       });
       
-      toast("Prayer request created successfully!");
+      toast(t("create_prayer.success"));
       navigate(`/group/${groupId}`);
     } catch (error) {
-      toast("Failed to create prayer request");
+      toast(t("create_prayer.error"));
       console.error("Error creating prayer request:", error);
     } finally {
       setIsSubmitting(false);
@@ -82,42 +84,42 @@ const CreatePrayerPage: React.FC = () => {
 
   return (
     <div className="pb-16">
-      <Header title="Create Prayer Request" showBackButton />
+      <Header title="create_prayer.title" showBackButton />
       
       <div className="p-4">
         {groupName && (
           <div className="mb-4">
             <p className="text-sm text-muted-foreground">
-              Creating a prayer request for <span className="font-medium text-foreground">{groupName}</span>
+              {t("create_prayer.for_group")} <span className="font-medium text-foreground">{groupName}</span>
             </p>
           </div>
         )}
         
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-2">
-            <Label htmlFor="title">Prayer Title*</Label>
+            <Label htmlFor="title">{t("create_prayer.prayer_title")}</Label>
             <Input
               id="title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="Enter prayer title"
+              placeholder={t("create_prayer.title_placeholder")}
               required
             />
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="description">Description</Label>
+            <Label htmlFor="description">{t("create_prayer.description")}</Label>
             <Textarea
               id="description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="Describe your prayer request"
+              placeholder={t("create_prayer.description_placeholder")}
               rows={4}
             />
           </div>
           
           <div className="space-y-2">
-            <Label>Prayer Type</Label>
+            <Label>{t("create_prayer.type")}</Label>
             <RadioGroup
               value={prayerType}
               onValueChange={(value) => setPrayerType(value as "prayer" | "fast" | "nightPrayer")}
@@ -128,9 +130,9 @@ const CreatePrayerPage: React.FC = () => {
                 <Label htmlFor="prayer" className="flex items-center cursor-pointer">
                   <Heart className="h-4 w-4 mr-2 text-primary" />
                   <div>
-                    <span className="font-medium">Prayer Request</span>
+                    <span className="font-medium">{t("create_prayer.type_prayer")}</span>
                     <p className="text-xs text-muted-foreground">
-                      A regular prayer request for support
+                      {t("create_prayer.type_prayer_desc")}
                     </p>
                   </div>
                 </Label>
@@ -141,9 +143,9 @@ const CreatePrayerPage: React.FC = () => {
                 <Label htmlFor="fast" className="flex items-center cursor-pointer">
                   <CalendarDays className="h-4 w-4 mr-2 text-primary" />
                   <div>
-                    <span className="font-medium">Fasting Prayer</span>
+                    <span className="font-medium">{t("create_prayer.type_fast")}</span>
                     <p className="text-xs text-muted-foreground">
-                      A prayer accompanied by fasting
+                      {t("create_prayer.type_fast_desc")}
                     </p>
                   </div>
                 </Label>
@@ -154,9 +156,9 @@ const CreatePrayerPage: React.FC = () => {
                 <Label htmlFor="nightPrayer" className="flex items-center cursor-pointer">
                   <Moon className="h-4 w-4 mr-2 text-primary" />
                   <div>
-                    <span className="font-medium">Night Prayer</span>
+                    <span className="font-medium">{t("create_prayer.type_night")}</span>
                     <p className="text-xs text-muted-foreground">
-                      Prayer during night hours
+                      {t("create_prayer.type_night_desc")}
                     </p>
                   </div>
                 </Label>
@@ -165,7 +167,7 @@ const CreatePrayerPage: React.FC = () => {
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="reminderTime">Reminder Time (optional)</Label>
+            <Label htmlFor="reminderTime">{t("create_prayer.reminder")}</Label>
             <Input
               id="reminderTime"
               type="time"
@@ -173,13 +175,13 @@ const CreatePrayerPage: React.FC = () => {
               onChange={(e) => setReminderTime(e.target.value)}
             />
             <p className="text-xs text-muted-foreground">
-              Set a daily reminder time for this prayer
+              {t("create_prayer.reminder_desc")}
             </p>
           </div>
           
           {prayerType === "fast" && (
             <div className="space-y-2">
-              <Label htmlFor="endDate">End Date (optional)</Label>
+              <Label htmlFor="endDate">{t("create_prayer.end_date")}</Label>
               <Input
                 id="endDate"
                 type="date"
@@ -187,7 +189,7 @@ const CreatePrayerPage: React.FC = () => {
                 onChange={(e) => setEndDate(e.target.value)}
               />
               <p className="text-xs text-muted-foreground">
-                Set an end date for the fasting period
+                {t("create_prayer.end_date_desc")}
               </p>
             </div>
           )}
@@ -197,7 +199,7 @@ const CreatePrayerPage: React.FC = () => {
             className="w-full" 
             disabled={isSubmitting || !title.trim()}
           >
-            {isSubmitting ? "Creating..." : "Create Prayer Request"}
+            {isSubmitting ? t("create_prayer.creating") : t("create_prayer.button")}
           </Button>
         </form>
       </div>

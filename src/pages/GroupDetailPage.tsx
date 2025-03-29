@@ -10,11 +10,13 @@ import Header from "@/components/Header";
 import BottomNavigation from "@/components/BottomNavigation";
 import PrayerCard from "@/components/PrayerCard";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const GroupDetailPage: React.FC = () => {
   const { groupId } = useParams<{ groupId: string }>();
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { t } = useLanguage();
   
   const [group, setGroup] = useState<PrayerGroup | null>(null);
   const [prayerRequests, setPrayerRequests] = useState<PrayerRequest[]>([]);
@@ -70,7 +72,7 @@ const GroupDetailPage: React.FC = () => {
   if (loading) {
     return (
       <div className="pb-16">
-        <Header title="Loading..." showBackButton />
+        <Header title="group_detail.loading" showBackButton />
         <div className="p-4">
           <div className="animate-pulse space-y-4">
             <div className="h-16 bg-muted rounded w-3/4"></div>
@@ -86,15 +88,15 @@ const GroupDetailPage: React.FC = () => {
   if (!group) {
     return (
       <div className="pb-16">
-        <Header title="Error" showBackButton />
+        <Header title="group_detail.group_not_found" showBackButton />
         <div className="p-4 text-center">
-          <p className="text-lg text-muted-foreground">Group not found</p>
+          <p className="text-lg text-muted-foreground">{t("group_detail.group_not_found")}</p>
           <Button 
             onClick={() => navigate('/groups')} 
             variant="link"
             className="mt-4"
           >
-            Back to groups
+            {t("group_detail.back_to_groups")}
           </Button>
         </div>
         <BottomNavigation />
@@ -123,48 +125,50 @@ const GroupDetailPage: React.FC = () => {
           
           <div className="flex items-center mt-3 text-sm text-muted-foreground">
             <Users className="h-4 w-4 mr-1" />
-            <span>{group.memberCount} member{group.memberCount !== 1 ? 's' : ''}</span>
+            <span>
+              {group.memberCount} {group.memberCount !== 1 ? t("group_detail.members_plural") : t("group_detail.members")}
+            </span>
           </div>
         </div>
         
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-lg font-semibold">Prayer Requests</h2>
+          <h2 className="text-lg font-semibold">{t("group_detail.prayer_requests")}</h2>
           <Button 
             onClick={handleCreatePrayer} 
             size="sm"
           >
             <Plus className="h-4 w-4 mr-1" />
-            New Prayer
+            {t("group_detail.new_prayer")}
           </Button>
         </div>
         
         <Tabs defaultValue="all" className="mb-4" onValueChange={setActiveTab}>
           <TabsList className="grid grid-cols-4">
-            <TabsTrigger value="all">All</TabsTrigger>
+            <TabsTrigger value="all">{t("group_detail.tab_all")}</TabsTrigger>
             <TabsTrigger value="prayers" className="flex items-center justify-center">
               <Heart className="h-3 w-3 mr-1" />
-              <span>Prayers</span>
+              <span>{t("group_detail.tab_prayers")}</span>
             </TabsTrigger>
             <TabsTrigger value="fasts" className="flex items-center justify-center">
               <CalendarDays className="h-3 w-3 mr-1" />
-              <span>Fasts</span>
+              <span>{t("group_detail.tab_fasts")}</span>
             </TabsTrigger>
             <TabsTrigger value="night" className="flex items-center justify-center">
               <Moon className="h-3 w-3 mr-1" />
-              <span>Night</span>
+              <span>{t("group_detail.tab_night")}</span>
             </TabsTrigger>
           </TabsList>
           
           <TabsContent value="all">
             {filteredPrayerRequests.length === 0 ? (
               <div className="text-center py-8">
-                <p className="text-muted-foreground">No prayer requests found</p>
+                <p className="text-muted-foreground">{t("group_detail.no_prayers")}</p>
                 <Button 
                   onClick={handleCreatePrayer} 
                   variant="link" 
                   className="mt-2"
                 >
-                  Create the first prayer request
+                  {t("group_detail.no_prayers_create")}
                 </Button>
               </div>
             ) : (
@@ -179,13 +183,13 @@ const GroupDetailPage: React.FC = () => {
           <TabsContent value="prayers">
             {filteredPrayerRequests.length === 0 ? (
               <div className="text-center py-8">
-                <p className="text-muted-foreground">No prayer requests found</p>
+                <p className="text-muted-foreground">{t("group_detail.no_prayers_regular")}</p>
                 <Button 
                   onClick={handleCreatePrayer} 
                   variant="link" 
                   className="mt-2"
                 >
-                  Create a prayer request
+                  {t("group_detail.no_prayers_create_regular")}
                 </Button>
               </div>
             ) : (
@@ -200,13 +204,13 @@ const GroupDetailPage: React.FC = () => {
           <TabsContent value="fasts">
             {filteredPrayerRequests.length === 0 ? (
               <div className="text-center py-8">
-                <p className="text-muted-foreground">No fasting prayers found</p>
+                <p className="text-muted-foreground">{t("group_detail.no_fasts")}</p>
                 <Button 
                   onClick={handleCreatePrayer} 
                   variant="link" 
                   className="mt-2"
                 >
-                  Create a fasting prayer
+                  {t("group_detail.no_fasts_create")}
                 </Button>
               </div>
             ) : (
@@ -221,13 +225,13 @@ const GroupDetailPage: React.FC = () => {
           <TabsContent value="night">
             {filteredPrayerRequests.length === 0 ? (
               <div className="text-center py-8">
-                <p className="text-muted-foreground">No night prayer requests found</p>
+                <p className="text-muted-foreground">{t("group_detail.no_night")}</p>
                 <Button 
                   onClick={handleCreatePrayer} 
                   variant="link" 
                   className="mt-2"
                 >
-                  Create a night prayer
+                  {t("group_detail.no_night_create")}
                 </Button>
               </div>
             ) : (
