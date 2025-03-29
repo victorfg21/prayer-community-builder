@@ -1,6 +1,6 @@
 
 import React, { createContext, useState, useContext, useEffect } from "react";
-import { toast } from "@/components/ui/sonner";
+import { toast } from "sonner";
 import axios from "axios";
 
 // Mock user data interface
@@ -17,6 +17,8 @@ interface AuthContextType {
   signInWithGoogle: () => void;
   signOut: () => void;  
   signInWithGoogleCallback: (token: string) => Promise<void>;
+  enterDemoMode: () => void;
+  isDemoMode: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -24,12 +26,20 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isDemoMode, setIsDemoMode] = useState(false);
 
   useEffect(() => {
-    // Check local storage for previously saved user
-    const savedUser = localStorage.getItem("oremus-user");
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
+    // Check for demo mode
+    const demoMode = localStorage.getItem("oremus-demo-mode");
+    
+    if (demoMode === "true") {
+      enterDemoMode();
+    } else {
+      // Check local storage for previously saved user
+      const savedUser = localStorage.getItem("oremus-user");
+      if (savedUser) {
+        setUser(JSON.parse(savedUser));
+      }
     }
 
     setLoading(false);
@@ -63,15 +73,30 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setLoading(false);
   };
 
+  const enterDemoMode = () => {
+    const demoUser: User = {
+      id: "demo-user-123",
+      name: "Usuário Demonstração",
+      email: "demo@oremus.app",
+      photoURL: "https://ui-avatars.com/api/?name=Demo+User&background=5e17eb&color=fff"
+    };
+    
+    setUser(demoUser);
+    setIsDemoMode(true);
+    localStorage.setItem("oremus-demo-mode", "true");
+    toast.success("Modo de demonstração ativado");
+  };
 
   const signOut = () => {
     setUser(null);
+    setIsDemoMode(false);
     localStorage.removeItem("oremus-user");
-    toast("You have been signed out");
+    localStorage.removeItem("oremus-demo-mode");
+    toast("Você saiu da sua conta");
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, signInWithGoogle, signOut, signInWithGoogleCallback }}>
+    <AuthContext.Provider value={{ user, loading, signInWithGoogle, signOut, signInWithGoogleCallback, enterDemoMode, isDemoMode }}>
       {children}
     </AuthContext.Provider>
   );

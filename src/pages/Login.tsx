@@ -4,11 +4,11 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 import { Navigate } from "react-router-dom";
 import MobileContainer from "@/components/MobileContainer";
-import { Heart } from "lucide-react";
+import { Heart, Eye } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const Login: React.FC = () => {
-  const { user, loading, signInWithGoogle } = useAuth();
+  const { user, loading, signInWithGoogle, enterDemoMode } = useAuth();
   const { t } = useLanguage();
   
   // Redirect if already logged in
@@ -46,6 +46,24 @@ const Login: React.FC = () => {
                 size="lg"
               >
                 {loading ? t("login.signing_in") || "Signing in..." : t("login.sign_in") || "Sign in with Google"}
+              </Button>
+              
+              <div className="relative my-6">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-muted"></div>
+                </div>
+                <div className="relative flex justify-center text-xs uppercase">
+                  <span className="bg-white/90 px-2 text-muted-foreground">ou</span>
+                </div>
+              </div>
+              
+              <Button
+                onClick={enterDemoMode}
+                variant="outline"
+                className="w-full"
+              >
+                <Eye size={18} className="mr-2" />
+                Modo de demonstração
               </Button>
             </div>
 
