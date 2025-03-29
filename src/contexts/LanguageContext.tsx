@@ -20,6 +20,7 @@ const translations = {
     "nav.groups": "Groups",
     "nav.settings": "Settings",
     "nav.back": "Back",
+    "nav.create": "Create",
     
     // Login
     "login.welcome": "Welcome to Oremus",
@@ -150,6 +151,30 @@ const translations = {
     "group_detail.group_not_found": "Group not found",
     "group_detail.back_to_groups": "Back to groups",
     "group_detail.loading": "Loading...",
+
+    // Prayer Detail Page
+    "prayer_detail.title": "Prayer Details",
+    "prayer_detail.loading": "Loading...",
+    "prayer_detail.error": "Error",
+    "prayer_detail.not_found": "Prayer request not found",
+    "prayer_detail.go_back": "Go Back",
+    "prayer_detail.prayer_status": "Prayer Status",
+    "prayer_detail.prayer_reminder": "Prayer Reminder",
+    "prayer_detail.reminder_updated": "Reminder updated successfully",
+    "prayer_detail.reminder_error": "Could not update reminder",
+    "prayer_detail.reminder_cleared": "Reminder removed",
+    "prayer_detail.reminder_clear_error": "Could not remove reminder",
+    "prayer_detail.people_plural": "people",
+    "prayer_detail.person": "person",
+    "prayer_detail.prayed_today": "prayed today",
+    "prayer_detail.fasting_until": "Fasting until",
+    "prayer_detail.night_commitment": "Night prayer commitment",
+    "prayer_detail.reminder_set": "Reminder set for",
+    "prayer_detail.clear": "Clear",
+    "prayer_detail.no_reminder": "No reminder set for this prayer",
+    "prayer_detail.updating": "Updating...",
+    "prayer_detail.set_reminder": "Set Reminder",
+    "prayer_detail.back_to_group": "Back to Group",
   },
   "pt-BR": {
     // General
@@ -161,6 +186,7 @@ const translations = {
     "nav.groups": "Grupos",
     "nav.settings": "Configurações",
     "nav.back": "Voltar",
+    "nav.create": "Criar",
     
     // Login
     "login.welcome": "Bem-vindo ao Oremus",

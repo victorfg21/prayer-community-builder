@@ -45,7 +45,7 @@ const BottomNavigation: React.FC = () => {
         )}
       >
         <PlusCircle size={22} />
-        <span className="text-xs mt-1">{t("create_group.create")}</span>
+        <span className="text-xs mt-1">{t("nav.create")}</span>
       </Link>
       
       <Link 
