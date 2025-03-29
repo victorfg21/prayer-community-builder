@@ -18,20 +18,22 @@ const Login: React.FC = () => {
 
   return (
     <MobileContainer>
-      <div className="flex flex-col items-center justify-center min-h-screen p-8">
+      <div className="flex flex-col items-center justify-center min-h-screen p-8 bg-gradient-to-br from-white via-blue-50/30 to-indigo-50/30">
         <div className="w-full max-w-md flex flex-col items-center">
           <div className="mb-8 text-center animate-float">
-            <div className="bg-primary/10 text-primary p-4 rounded-full inline-block mb-4">
+            <div className="bg-primary/10 text-primary p-5 rounded-full inline-block mb-6 shadow-sm border border-primary/5">
               <Heart size={40} className="animate-pulse-gentle" />
             </div>
-            <h1 className="text-4xl font-bold mb-2">{t("app.name")}</h1>
+            <h1 className="text-4xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80">
+              {t("app.name")}
+            </h1>
             <p className="text-xl text-muted-foreground">
               {t("app.tagline") || "Unite in prayer, grow in faith"}
             </p>
           </div>
 
           <div className="w-full space-y-6 mb-8">
-            <div className="bg-card text-card-foreground border border-border p-6 rounded-lg shadow-sm">
+            <div className="card-soft p-6 rounded-xl bg-white/80 backdrop-blur-sm">
               <h2 className="text-xl font-semibold mb-4">{t("login.welcome") || "Welcome to Oremus"}</h2>
               <p className="text-muted-foreground mb-6">
                 {t("login.description") || "Join our prayer community to share, support, and grow together in faith."}
@@ -40,7 +42,7 @@ const Login: React.FC = () => {
               <Button
                 onClick={signInWithGoogle}
                 disabled={loading}
-                className="w-full"
+                className="w-full shadow-sm"
                 size="lg"
               >
                 {loading ? t("login.signing_in") || "Signing in..." : t("login.sign_in") || "Sign in with Google"}

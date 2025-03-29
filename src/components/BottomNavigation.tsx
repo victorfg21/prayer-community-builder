@@ -14,7 +14,7 @@ const BottomNavigation: React.FC = () => {
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 flex justify-around items-center h-16 bg-background border-t border-border w-full max-w-[390px] mx-auto">
+    <div className="fixed bottom-0 left-0 right-0 z-50 flex justify-around items-center h-16 bg-white/80 backdrop-blur-md border-t border-border/60 w-full max-w-[390px] mx-auto shadow-sm">
       <Link 
         to="/" 
         className={cn(
@@ -23,7 +23,7 @@ const BottomNavigation: React.FC = () => {
         )}
       >
         <Home size={22} />
-        <span className="text-xs mt-1">{t("nav.home")}</span>
+        <span className="text-xs mt-1 font-medium">{t("nav.home")}</span>
       </Link>
       
       <Link 
@@ -34,7 +34,7 @@ const BottomNavigation: React.FC = () => {
         )}
       >
         <Users size={22} />
-        <span className="text-xs mt-1">{t("nav.groups")}</span>
+        <span className="text-xs mt-1 font-medium">{t("nav.groups")}</span>
       </Link>
       
       <Link 
@@ -45,7 +45,7 @@ const BottomNavigation: React.FC = () => {
         )}
       >
         <PlusCircle size={22} />
-        <span className="text-xs mt-1">{t("nav.create")}</span>
+        <span className="text-xs mt-1 font-medium">{t("nav.create")}</span>
       </Link>
       
       <Link 
@@ -56,7 +56,7 @@ const BottomNavigation: React.FC = () => {
         )}
       >
         <Settings size={22} />
-        <span className="text-xs mt-1">{t("nav.settings")}</span>
+        <span className="text-xs mt-1 font-medium">{t("nav.settings")}</span>
       </Link>
     </div>
   );
