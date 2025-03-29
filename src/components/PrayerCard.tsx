@@ -10,6 +10,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { formatDistanceToNow } from "date-fns";
 import { toast } from "@/components/ui/sonner";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface PrayerCardProps {
   prayer: PrayerRequest;
@@ -19,6 +20,7 @@ interface PrayerCardProps {
 const PrayerCard: React.FC<PrayerCardProps> = ({ prayer, onUpdate }) => {
   const { user } = useAuth();
   const navigate = useNavigate();
+  const { t } = useLanguage();
   
   const handlePrayedToday = async () => {
     if (!user) return;
@@ -29,10 +31,10 @@ const PrayerCard: React.FC<PrayerCardProps> = ({ prayer, onUpdate }) => {
       
       const hasAlreadyPrayed = prayer.prayedToday.includes(user.id);
       if (!hasAlreadyPrayed) {
-        toast("Your prayer has been recorded. Thank you!");
+        toast(t("prayer.prayed_recorded"));
       }
     } catch (error) {
-      toast("Could not update prayer status");
+      toast(t("prayer.prayed_error"));
     }
   };
   
@@ -50,11 +52,11 @@ const PrayerCard: React.FC<PrayerCardProps> = ({ prayer, onUpdate }) => {
   const getTypeLabel = () => {
     switch (prayer.type) {
       case 'fast':
-        return "Fast";
+        return t("prayer.type_fast");
       case 'nightPrayer':
-        return "Night Prayer";
+        return t("prayer.type_night");
       default:
-        return "Prayer";
+        return t("prayer.type_prayer");
     }
   };
   
@@ -82,20 +84,20 @@ const PrayerCard: React.FC<PrayerCardProps> = ({ prayer, onUpdate }) => {
         {prayer.reminderTime && (
           <div className="flex items-center mt-2 text-xs text-muted-foreground">
             <Clock className="h-3 w-3 mr-1" />
-            <span>Reminder at {prayer.reminderTime}</span>
+            <span>{t("prayer.reminder_at")} {prayer.reminderTime}</span>
           </div>
         )}
         
         {prayer.endDate && (
           <div className="flex items-center mt-2 text-xs text-muted-foreground">
             <CalendarDays className="h-3 w-3 mr-1" />
-            <span>Until {new Date(prayer.endDate).toLocaleDateString()}</span>
+            <span>{t("prayer.until")} {new Date(prayer.endDate).toLocaleDateString()}</span>
           </div>
         )}
       </CardContent>
       <CardFooter className="pt-1 flex justify-between">
         <div className="text-xs text-muted-foreground">
-          {prayer.prayedToday.length} prayer{prayer.prayedToday.length !== 1 ? 's' : ''} today
+          {prayer.prayedToday.length} {prayer.prayedToday.length !== 1 ? t("prayer.prayers_plural") : t("prayer.prayers_singular")} {t("prayer.today")}
         </div>
         <div className="flex space-x-2">
           <Button 
@@ -105,7 +107,7 @@ const PrayerCard: React.FC<PrayerCardProps> = ({ prayer, onUpdate }) => {
             onClick={handlePrayedToday}
           >
             <Heart className={`h-4 w-4 mr-1 ${hasPrayed ? 'fill-current' : ''}`} />
-            {hasPrayed ? 'Prayed' : 'Pray'}
+            {hasPrayed ? t("prayer.prayed") : t("prayer.pray")}
           </Button>
           
           <Button
@@ -113,7 +115,7 @@ const PrayerCard: React.FC<PrayerCardProps> = ({ prayer, onUpdate }) => {
             variant="ghost"
             onClick={() => navigate(`/prayer/${prayer.id}`)}
           >
-            Details
+            {t("prayer.details")}
           </Button>
         </div>
       </CardFooter>

@@ -11,11 +11,13 @@ import BottomNavigation from "@/components/BottomNavigation";
 import { Badge } from "@/components/ui/badge";
 import { formatDistanceToNow } from "date-fns";
 import { toast } from "@/components/ui/sonner";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const PrayerDetailPage: React.FC = () => {
   const { prayerId } = useParams<{ prayerId: string }>();
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { t } = useLanguage();
   
   const [prayer, setPrayer] = useState<PrayerRequest | null>(null);
   const [loading, setLoading] = useState(true);
@@ -53,10 +55,10 @@ const PrayerDetailPage: React.FC = () => {
       
       const hasAlreadyPrayed = prayer.prayedToday.includes(user.id);
       if (!hasAlreadyPrayed) {
-        toast("Your prayer has been recorded. Thank you!");
+        toast(t("prayer.prayed_recorded"));
       }
     } catch (error) {
-      toast("Could not update prayer status");
+      toast(t("prayer.prayed_error"));
     }
   };
   
@@ -71,9 +73,9 @@ const PrayerDetailPage: React.FC = () => {
       );
       
       setPrayer(updatedPrayer);
-      toast("Reminder updated successfully");
+      toast(t("prayer_detail.reminder_updated"));
     } catch (error) {
-      toast("Could not update reminder");
+      toast(t("prayer_detail.reminder_error"));
     } finally {
       setIsUpdatingReminder(false);
     }
@@ -88,9 +90,9 @@ const PrayerDetailPage: React.FC = () => {
       
       setPrayer(updatedPrayer);
       setReminderTime("");
-      toast("Reminder cleared");
+      toast(t("prayer_detail.reminder_cleared"));
     } catch (error) {
-      toast("Could not clear reminder");
+      toast(t("prayer_detail.reminder_clear_error"));
     } finally {
       setIsUpdatingReminder(false);
     }
@@ -114,11 +116,11 @@ const PrayerDetailPage: React.FC = () => {
     
     switch (prayer.type) {
       case 'fast':
-        return "Fast";
+        return t("prayer.type_fast");
       case 'nightPrayer':
-        return "Night Prayer";
+        return t("prayer.type_night");
       default:
-        return "Prayer";
+        return t("prayer.type_prayer");
     }
   };
 
@@ -129,7 +131,7 @@ const PrayerDetailPage: React.FC = () => {
   if (loading) {
     return (
       <div className="pb-16">
-        <Header title="Loading..." showBackButton />
+        <Header title="prayer_detail.loading" showBackButton />
         <div className="p-4">
           <div className="animate-pulse space-y-4">
             <div className="h-16 bg-muted rounded w-3/4"></div>
@@ -145,15 +147,15 @@ const PrayerDetailPage: React.FC = () => {
   if (!prayer) {
     return (
       <div className="pb-16">
-        <Header title="Error" showBackButton />
+        <Header title="prayer_detail.error" showBackButton />
         <div className="p-4 text-center">
-          <p className="text-lg text-muted-foreground">Prayer request not found</p>
+          <p className="text-lg text-muted-foreground">{t("prayer_detail.not_found")}</p>
           <Button 
             onClick={() => navigate(-1)} 
             variant="link"
             className="mt-4"
           >
-            Go back
+            {t("prayer_detail.go_back")}
           </Button>
         </div>
         <BottomNavigation />
@@ -165,7 +167,7 @@ const PrayerDetailPage: React.FC = () => {
 
   return (
     <div className="pb-16">
-      <Header title="Prayer Details" showBackButton />
+      <Header title="prayer_detail.title" showBackButton />
       
       <div className="p-4">
         <div className="flex items-center mb-2">
@@ -186,14 +188,14 @@ const PrayerDetailPage: React.FC = () => {
         
         <div className="grid grid-cols-1 gap-6 mb-6">
           <div className="space-y-4">
-            <h2 className="text-lg font-semibold">Prayer Status</h2>
+            <h2 className="text-lg font-semibold">{t("prayer_detail.prayer_status")}</h2>
             
             <div className="bg-card border border-border rounded-lg p-4">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center">
                   <Users className="h-5 w-5 mr-2 text-muted-foreground" />
                   <span>
-                    {prayer.prayedToday.length} person{prayer.prayedToday.length !== 1 ? 's' : ''} prayed today
+                    {prayer.prayedToday.length} {prayer.prayedToday.length !== 1 ? t("prayer_detail.people_plural") : t("prayer_detail.person")} {t("prayer_detail.prayed_today")}
                   </span>
                 </div>
                 
@@ -203,35 +205,35 @@ const PrayerDetailPage: React.FC = () => {
                   onClick={handlePrayedToday}
                 >
                   <Heart className={`h-4 w-4 mr-1 ${hasPrayed ? 'fill-current' : ''}`} />
-                  {hasPrayed ? 'Prayed' : 'Pray'}
+                  {hasPrayed ? t("prayer.prayed") : t("prayer.pray")}
                 </Button>
               </div>
               
               {prayer.type === 'fast' && prayer.endDate && (
                 <div className="flex items-center text-sm text-muted-foreground">
                   <CalendarDays className="h-4 w-4 mr-2" />
-                  <span>Fasting until {new Date(prayer.endDate).toLocaleDateString()}</span>
+                  <span>{t("prayer_detail.fasting_until")} {new Date(prayer.endDate).toLocaleDateString()}</span>
                 </div>
               )}
               
               {prayer.type === 'nightPrayer' && (
                 <div className="flex items-center text-sm text-muted-foreground">
                   <Moon className="h-4 w-4 mr-2" />
-                  <span>Night prayer commitment</span>
+                  <span>{t("prayer_detail.night_commitment")}</span>
                 </div>
               )}
             </div>
           </div>
           
           <div className="space-y-4">
-            <h2 className="text-lg font-semibold">Prayer Reminder</h2>
+            <h2 className="text-lg font-semibold">{t("prayer_detail.prayer_reminder")}</h2>
             
             <div className="bg-card border border-border rounded-lg p-4">
               {prayer.reminderTime ? (
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center">
                     <Bell className="h-5 w-5 mr-2 text-muted-foreground" />
-                    <span>Reminder set for {prayer.reminderTime}</span>
+                    <span>{t("prayer_detail.reminder_set")} {prayer.reminderTime}</span>
                   </div>
                   
                   <Button 
@@ -241,11 +243,11 @@ const PrayerDetailPage: React.FC = () => {
                     disabled={isUpdatingReminder}
                   >
                     <BellOff className="h-4 w-4 mr-1" />
-                    Clear
+                    {t("prayer_detail.clear")}
                   </Button>
                 </div>
               ) : (
-                <p className="text-muted-foreground mb-4">No reminder set for this prayer</p>
+                <p className="text-muted-foreground mb-4">{t("prayer_detail.no_reminder")}</p>
               )}
               
               <div className="flex space-x-2">
@@ -259,7 +261,7 @@ const PrayerDetailPage: React.FC = () => {
                   onClick={handleSetReminder} 
                   disabled={isUpdatingReminder || !reminderTime}
                 >
-                  {isUpdatingReminder ? "Updating..." : "Set Reminder"}
+                  {isUpdatingReminder ? t("prayer_detail.updating") : t("prayer_detail.set_reminder")}
                 </Button>
               </div>
             </div>
@@ -271,7 +273,7 @@ const PrayerDetailPage: React.FC = () => {
           className="w-full" 
           onClick={() => navigate(`/group/${prayer.groupId}`)}
         >
-          Back to Group
+          {t("prayer_detail.back_to_group")}
         </Button>
       </div>
       
