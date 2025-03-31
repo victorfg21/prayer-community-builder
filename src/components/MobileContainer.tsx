@@ -18,7 +18,7 @@ const MobileContainer: React.FC<MobileContainerProps> = ({ children }) => {
         <div className="absolute top-3 left-1/2 -translate-x-1/2 h-1 w-16 bg-black/10 dark:bg-white/15 rounded-full"></div>
       </div>
       
-      <style jsx="true">{`
+      <style>{`
         .mobile-container {
           position: relative;
           width: 100%;
